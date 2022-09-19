@@ -1,183 +1,143 @@
 <template>
 <div>
   <ul class="tilesWrap">
-    <li class="blog-list" v-for="item in blogList" :key="item.id"  @click.once="loadBlock(item.id)" >
-      <h2>{{item.id}}</h2>
-      <h3> {{ item.name }} </h3>
-      <p>
-        {{item.description}}
-      </p>
-      <button @click.once="loadBlock(item.id)">Read blog</button>
+    <li class="blog-list" v-bind:currentPage="currentPage" v-for="item in visibleBlogs" :key="item.id" @click.once="loadBlock(item.id)">
+      <article class="bloglist__profile">
+        <img :src=item.image_link class="bloglist__picture">
+        <span class="bloglist__name">{{ item.name }}</span>
+        <span class="bloglist__description">{{item.description}}</span>
+        <span class="bloglist__date">{{ item.last_modified }}</span>
+      </article>
     </li>
+    <pagination-blogs v-bind:blogs="blogList" v-bind:currentPage="currentPage" v-bind:pageSize="pageSize" v-on:page:update="updatePage"></pagination-blogs>
   </ul>
-
 </div>
 </template>
     
 <script>
     import blogList from "@/configs/blogList";
     import router from "@/router"
-
+    import PaginationBlogs from "@/components/PaginationBlogs.vue";
   export default {
-    props: {
-      msg: String
+    components: {
+      PaginationBlogs
     },
     data(){
       return{
-        items: [],
         blogList: blogList.reverse(),
-        router: router
+        router: router,
+        currentPage: 0,
+        pageSize: 5,
+        visibleBlogs: []
       }
     },
     methods: {
         loadBlock(itemId){
             console.log(itemId)
             this.router.push({name: 'BlogExample', params: {id: itemId}})
+        },
+        updatePage(pageNumber) {
+          this.currentPage = pageNumber;
+          this.updateVisibleBlogs();
+        },
+        updateVisibleBlogs(){
+          this.visibleBlogs = this.blogList.slice(this.currentPage * this.pageSize, (this.currentPage * this.pageSize) + this.pageSize)
+          if (this.visibleBlogs.length == 0 && this.currentPage > 0){
+            this.updateBlog(this.currentPage -1);
+          }
         }
     },
     beforeMount(){
-
+      this.updateVisibleBlogs();
     },
   }
 </script>
   
-<style scoped>
-
-    .code-block{
-    padding-right: 20%;
-    padding-left: 20%;
-    }
-    .blog-list{
-        cursor: pointer;
-        text-align: center;
+<style scoped lang="scss">
+    ul {
+      list-style: none;
+      padding-left: 20%;
+      padding-right: 20%;
     }
 
+    ul li {
+      float: none !important;
+      margin: 10px;
+    }
 
-.tilesWrap {
-	padding: 0;
-	margin-left: 15%;
-  margin-right: 15%;
-	list-style: none;
-	text-align: center;
-}
-.tilesWrap li {
-	display: inline-block;
-	width: 20%;
-	min-width: 200px;
-	max-width: 230px;
-	padding: 80px 20px 40px;
-	position: relative;
-	vertical-align: top;
-	margin: 10px;
-	font-family: 'helvetica', san-serif;
-	min-height: vh;
-	background: #163f4b;
-	border: 1px solid #252727;
-	text-align: left;
-}
-.tilesWrap li h2 {
-	font-size: 114px;
-	margin: 0;
-	position: absolute;
-	opacity: 0.2;
-	top: 50px;
-	right: 10px;
-	transition: all 0.3s ease-in-out;
-  color: #b7b7b7;
-}
-.tilesWrap li h3 {
-	font-size: 20px;
-	color: #b7b7b7;
-	margin-bottom: 5px;
-}
-.tilesWrap li p {
-	font-size: 16px;
-	line-height: 18px;
-	color: #b7b7b7;
-	margin-top: 5px;
-}
-.tilesWrap li button {
-	background: transparent;
-	border: 1px solid #b7b7b7;
-	padding: 10px 20px;
-	color: #b7b7b7;
-	border-radius: 3px;
-	position: relative;
-	transition: all 0.3s ease-in-out;
-	transform: translateY(-40px);
-	opacity: 0;
-	cursor: pointer;
-	overflow: hidden;
-}
-.tilesWrap li button:before {
-	content: '';
-	position: absolute;
-	height: 100%;
-	width: 120%;
-	background: #b7b7b7;
-	top: 0;
-	opacity: 0;
-	left: -140px;
-	border-radius: 0 20px 20px 0;
-	z-index: -1;
-	transition: all 0.3s ease-in-out;
-	
-}
-.tilesWrap li:hover button {
-	transform: translateY(5px);
-	opacity: 1;
-}
-.tilesWrap li button:hover {
-	color: #262a2b;
-}
-.tilesWrap li button:hover:before {
-	left: 0;
-	opacity: 1;
-}
-.tilesWrap li:hover h2 {
-	top: 0px;
-	opacity: 0.6;
+
+.bloglist {
+  max-width: 490px;
+  width: 100%;
+  border-radius: 12px;
+
+  header {
+    --start: 15%;
+
+    height: 130px;
+    background-image: repeating-radial-gradient(
+        circle at var(--start),
+        transparent 0%,
+        transparent 10%,
+        rgba(54, 89, 219, 0.33) 10%,
+        rgba(54, 89, 219, 0.33) 17%
+      ),
+      linear-gradient(to right, #5b7cfa, #3659db);
+    color: #fff;
+    position: relative;
+    border-radius: 12px 12px 0 0;
+    overflow: hidden;
+  }
+
+  
+
+  &__profile {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    align-items: center;
+    padding: 10px 30px 10px 10px;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 5px 7px -1px rgba(51, 51, 51, 0.23);
+    cursor: pointer;
+    transition: transform 0.25s cubic-bezier(0.7, 0.98, 0.86, 0.98),
+      box-shadow 0.25s cubic-bezier(0.7, 0.98, 0.86, 0.98);
+    background-color: #fff;
+
+    &:hover {
+      transform: scale(1.2);
+      box-shadow: 0 9px 47px 11px rgba(51, 51, 51, 0.18);
+    }
+  }
+
+  &__picture {
+    max-width: 100%;
+    width: 60px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 10px #ebeef3, 0 0 0 22px #f3f4f6;
+  }
+
+  &__name {
+    color: #979cb0;
+    font-weight: 600;
+    font-size: 20px;
+    letter-spacing: 0.64px;
+    margin-left: 12px;
+  }
+
+
 }
 
-.tilesWrap li:before {
-	content: '';
-	position: absolute;
-	top: -2px;
-	left: -2px;
-	right: -2px;
-	bottom: -2px;
-	z-index: -1;
-	background: #fff;
-	transform: skew(2deg, 2deg);
+// bare minimuu styles
+
+body {
+  margin: 0;
+  background-color: #eaeaea;
+  display: grid;
+  height: 100vh;
+  place-items: center;
+  font-family: "Source Sans Pro", sans-serif;
 }
-.tilesWrap li:after {
-	content: '';
-	position: absolute;
-	width: 40%;
-	height: 100%;
-	left: 0;
-	top: 0;
-	background: rgba(255, 255, 255, 0.02);
-}
-.tilesWrap li:nth-child(1):before {
-	background: #C9FFBF;
-background: -webkit-linear-gradient(to right, #FFAFBD, #C9FFBF);
-background: linear-gradient(to right, #FFAFBD, #C9FFBF);
-}
-.tilesWrap li:nth-child(2):before {
-	background: #f2709c;
-background: -webkit-linear-gradient(to right, #ff9472, #f2709c);
-background: linear-gradient(to right, #ff9472, #f2709c);
-}
-.tilesWrap li:nth-child(3):before {
-	background: #c21500;
-background: -webkit-linear-gradient(to right, #ffc500, #C9FFBF);
-background: linear-gradient(to right, #ffc500, #C9FFBF);
-}
-.tilesWrap li:nth-child(4):before {
-	background: #FC354C;
-background: -webkit-linear-gradient(to right, #0ABFBC, #FC354C);
-background: linear-gradient(to right, #0ABFBC, #FC354C);
-}
+
 
 </style>
