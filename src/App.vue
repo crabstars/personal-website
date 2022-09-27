@@ -3,13 +3,13 @@
 
       <div class="container">
       <ul>
-        <li><a href='/about' class="hoverAnimation col-md-3" :class="{'kek':(active===1), 'inactive':(active)}" @mouseover="setActive(1)" @mouseleave="setActive(0)" target="_self">About</a></li>
+        <li><a href='/about' class="hoverAnimation col-md-3" :class="{'active':(active===1), 'inactive':(active)}" @mouseover="setActive(1)" @mouseleave="setActive(0)" target="_self">About</a></li>
         <li>|</li>
-        <li><a href='/blog' class="hoverAnimation col-md-3" :class="{'kek':(active===2), 'inactive':(active)}" @mouseover="setActive(2)" @mouseleave="setActive(0)" target="_self">Blog</a></li>
+        <li><a href='/blog' class="hoverAnimation col-md-3" :class="{'active':(active===2), 'inactive':(active)}" @mouseover="setActive(2)" @mouseleave="setActive(0)" target="_self">Blog</a></li>
         <li>|</li>
-        <li><a href='https://github.com/LamaKami' class="hoverAnimation col-md-3" :class="{'kek':(active===3), 'inactive':(active)}" @mouseover="setActive(3)" @mouseleave="setActive(0)" target="_blank">Github</a></li>
+        <li><a href='https://github.com/LamaKami' class="hoverAnimation col-md-3" :class="{'active':(active===3), 'inactive':(active)}" @mouseover="setActive(3)" @mouseleave="setActive(0)" target="_blank">Github</a></li>
         <li>|</li>
-        <li><a href='https://www.linkedin.com/in/daniel-w%C3%A4chtler-6b2422241/' class="hoverAnimation col-md-3" :class="{'kek':(active===4), 'inactive':(active)}" @mouseover="setActive(4)" @mouseleave="setActive(0)" target="_blank">LinkedIn</a></li>
+        <li><a href='https://www.linkedin.com/in/daniel-w%C3%A4chtler-6b2422241/' class="hoverAnimation col-md-3" :class="{'active':(active===4), 'inactive':(active)}" @mouseover="setActive(4)" @mouseleave="setActive(0)" target="_blank">LinkedIn</a></li>
       </ul>
     </div>
 
@@ -83,7 +83,7 @@ export default {
   
   text-decoration:none;
   transition: all 0.6s;
-  &.kek{ 
+  &.active{ 
     opacity: 1 !important;
   }
   &.inactive{ 
