@@ -9,7 +9,7 @@
         <span class="bloglist__date">{{ item.last_modified }}</span>
       </article>
     </li>
-    <pagination-blogs v-bind:blogs="blogList" v-bind:currentPage="currentPage" v-bind:pageSize="pageSize" v-on:page:update="updatePage"></pagination-blogs>
+    <pagination-blogs class="pagination" v-bind:blogs="blogList" v-bind:currentPage="currentPage" v-bind:pageSize="pageSize" v-on:page:update="updatePage"></pagination-blogs>
   </ul>
 </div>
 </template>
@@ -27,7 +27,7 @@
         blogList: blogList.reverse(),
         router: router,
         currentPage: 0,
-        pageSize: 5,
+        pageSize: 3,
         visibleBlogs: []
       }
     },
@@ -65,6 +65,11 @@
       margin: 10px;
     }
 
+.pagination{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .bloglist {
   max-width: 490px;
