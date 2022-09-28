@@ -1,11 +1,16 @@
 <template id="app">
   <html>
-
       <div class="container">
       <ul>
-        <li><a href='/about' class="hoverAnimation col-md-3" :class="{'active':(active===1), 'inactive':(active)}" @mouseover="setActive(1)" @mouseleave="setActive(0)" target="_self">About</a></li>
+        <li>
+          <a v-if="$route.path == '/about'" href='/about' class="hoverAnimation col-md-3" :class="{'active':(active===1), 'inactive':(active)}" @mouseover="setActive(1)" @mouseleave="setActive(0)" target="_self"><u>About</u></a>
+          <a v-else href='/about' class="hoverAnimation col-md-3" :class="{'active':(active===1), 'inactive':(active)}" @mouseover="setActive(1)" @mouseleave="setActive(0)" target="_self">About</a>
+        </li>
         <li>|</li>
-        <li><a href='/blog' class="hoverAnimation col-md-3" :class="{'active':(active===2), 'inactive':(active)}" @mouseover="setActive(2)" @mouseleave="setActive(0)" target="_self">Blog</a></li>
+        <li>
+          <a v-if="$route.path == '/blog'" href='/blog' class="hoverAnimation col-md-3" :class="{'active':(active===2), 'inactive':(active)}" @mouseover="setActive(2)" @mouseleave="setActive(0)" target="_self"><u>Blog</u></a>
+          <a v-else href='/blog' class="hoverAnimation col-md-3" :class="{'active':(active===2), 'inactive':(active)}" @mouseover="setActive(2)" @mouseleave="setActive(0)" target="_self">Blog</a>
+        </li>
         <li>|</li>
         <li><a href='https://github.com/LamaKami' class="hoverAnimation col-md-3" :class="{'active':(active===3), 'inactive':(active)}" @mouseover="setActive(3)" @mouseleave="setActive(0)" target="_blank">Github</a></li>
         <li>|</li>
@@ -25,6 +30,7 @@
   </html>
 </template>
 <script>
+    import router from "@/router"
 
 export default {
 // TODO dark mode, example: https://codepen.io/moso/pen/MxLwbE
@@ -36,6 +42,7 @@ export default {
   data(){
     return{
       active: 0,
+      router: router,
       darkMode: false
     }
   },
@@ -206,6 +213,7 @@ body.dark-mode {
   color: inherit;
 }
 ul {
+  font-family: Times New Roman, Helvetica, sans-serif;
   list-style: none;
   padding: 20px 40px;
   border-radius: 10px;

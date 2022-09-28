@@ -72,6 +72,7 @@
 }
 
 .bloglist {
+
   max-width: 490px;
   width: 100%;
   border-radius: 12px;
@@ -97,6 +98,7 @@
   
 
   &__profile {
+    font-family: Times New Roman, Helvetica, sans-serif;
     display: grid;
     grid-template-columns: 1fr 3fr 1fr;
     align-items: center;
@@ -120,6 +122,10 @@
     width: 60px;
     border-radius: 50%;
     box-shadow: 0 0 0 10px #ebeef3, 0 0 0 22px #f3f4f6;
+  }
+
+  &__description {
+    font-family: Times New Roman, Helvetica, sans-serif;
   }
 
   &__name {

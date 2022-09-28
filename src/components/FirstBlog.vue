@@ -1,23 +1,24 @@
 <template>
     <div class="code-block">
         <pre><code class="language-rust">
-    // This is comment
-    fn hi() -> function asyncThrottle(tasks: Array&lt;() => Promise&lt;unknown &gt;&gt; , concurrency = 1) {
+      // This is comment
+      fn hi() -> function kek() {
         String::from("hi")
-    }
+      }
         </code></pre>
-        Gleich kommt noch mehr code 
+        <a class="text">Gleich kommt noch mehr code s W</a>
         <pre><code class="language-rust">
-        // This is comment
-        fn hi() -> function asyncThrottle(tasks: Array&lt;() => Promise&lt;unknown &gt;&gt; , concurrency = 1) {
+          // This is comment
+          fn hi() -> function w() {
             String::from("hi")
-        }
+          }
             </code></pre>
     </div>
+    
 </template>
-
-<script>
-    export default {
-      name: 'FirstBlog',
-    }
-</script>
+    
+<style scoped>
+.text{
+    font-family: Times New Roman, Helvetica, sans-serif;
+}
+</style>
