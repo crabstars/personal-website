@@ -37,6 +37,9 @@ p {  color: rgb(79, 79, 82);}
   box-shadow: 0 4px 8px rgb(0 0 0 / 50%);
   font-family: Times New Roman, Helvetica, sans-serif;
 }
+.about.dark-mode{
+  background-color: #131111;
+}
 
 
 .aboutParagraphs{

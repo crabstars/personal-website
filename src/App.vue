@@ -20,13 +20,18 @@
       </ul>
     </div>
 
-    <div class="flex">
-          <div class="mode-toggle" @click="modeToggle()" :class="darkDark">
+    <div class="flex" id="checkbox">
+          <div class="mode-toggle"  @click="modeToggle()" :class="darkDark">
               <div class="toggle">
                   <div id="dark-mode" type="checkbox" ></div>
               </div>
           </div>
     </div>
+
+    <div id="app">
+  My name is <input v-model="name" >
+
+</div>
 
     <router-view />
   </html>
@@ -35,29 +40,34 @@
     import router from "@/router"
 
 export default {
-// TODO dark mode, example: https://codepen.io/moso/pen/MxLwbE
+
 
   name: 'StartSite',
-  props: {
-    msg: String
-  },
+  props: ['msg'],
   data(){
     return{
       active: 0,
       router: router,
-      darkMode: false
+      darkMode: false,
+      name: ""
     }
   },
 
   methods:{
+    log(){
+      console.log(this.darkMode)
+    },
     dark() {
-            document.querySelector('body').classList.add('dark-mode')
-            this.darkMode = true
-            this.$emit('dark')
+        console.log("dark")
+        document.querySelector('body')?.classList.add('dark-mode')
+        document.querySelector('.about')?.classList.add('dark-mode')
         },
 
     light() {
-        document.querySelector('body').classList.remove('dark-mode')
+        console.log("light")
+        document.querySelector('body')?.classList.remove('dark-mode')
+        document.querySelector('.about')?.classList.remove('dark-mode')
+
         this.darkMode = false
         this.$emit('light')
     },
@@ -67,16 +77,38 @@ export default {
         } else {
             this.dark()
         }
-    },
-    testLog(){
-      console.log("test")
+
+        const checkbox = document.getElementById('checkbox')
+        checkbox.addEventListener('change', () => {
+          document.body.classList.toggle('dark')
+        })
     }
   },
   computed: {
         darkDark() {
             return this.darkMode && 'darkmode-toggled'
         }
+  },
+  mounted() {
+    if (localStorage.darkMode) {
+      console.log("mounted mode")
+      this.darkMode = localStorage.darkMode;
     }
+    if (localStorage.name) {
+      console.log("mounted name")
+      this.name = localStorage.name;
+    }
+  },
+  watch: {
+    name(newName) {
+      console.log(newName)
+      localStorage.name = newName;
+    },
+    darkMode(mode) {
+      console.log(mode)
+      localStorage.darkMode = mode;
+    }
+  }
 }
 </script>
 
@@ -85,6 +117,7 @@ export default {
   a, a:visited, a:hover, a:active {
   color: inherit;
 }
+$mode-toggle-bg: #2f3146;
 
 .hoverAnimation{
   
@@ -126,10 +159,31 @@ export default {
   }
   
   body {
-    background: rgb(255, 255, 255) !important;
+    transition: background 0.2s linear;
+    background-color: rgb(252, 250, 250);
   }
 
-$mode-toggle-bg: #2f3146;
+  body.dark-mode{
+    background-color: rgb(27, 27, 27);
+    .mode-toggle {
+        background-color: lighten($mode-toggle-bg, 5%);
+
+        .toggle {
+            transform: translateX(19px);
+
+            #dark-mode {
+                &:before {
+                    border-radius: 50%;
+                    width: 150%;
+                    height: 85%;
+                    left: 40%;
+                    transform: translate(-10%, -40%), rotate(-35deg);
+                }
+            }
+        }
+    }
+  }
+
 // _mode-toggle.scss
 .mode-toggle {
     position: relative;
@@ -146,7 +200,7 @@ $mode-toggle-bg: #2f3146;
     overflow: hidden;
     cursor: pointer;
     z-index: 2;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: rgba(248, 247, 247, 0);
     -webkit-touch-callout: none;
     appearance: none;
     transition: background-color .5s ease;
@@ -182,29 +236,11 @@ $mode-toggle-bg: #2f3146;
                 background-color: #a5abba;
                 transition: border-radius .5s ease, width .5s ease, height .5s ease, left .5s ease, transform .5s ease;
             }
+   
         }
     }
 }
 
-body.dark-mode {
-    .mode-toggle {
-        background-color: lighten($mode-toggle-bg, 5%);
-
-        .toggle {
-            transform: translateX(19px);
-
-            #dark-mode {
-                &:before {
-                    border-radius: 50%;
-                    width: 150%;
-                    height: 85%;
-                    left: 40%;
-                    transform: translate(-10%, -40%), rotate(-35deg);
-                }
-            }
-        }
-    }
-}
 </style>
 
 
