@@ -1,6 +1,5 @@
 <template>
     <html>
-
     <div class="pagination">
       <span class="pagination__number-indicator"></span>
       <button span v-if="showPreviousLink()" class="pagination__arrow" v-on:click="updatePage(currentPage-1)">
@@ -25,14 +24,14 @@
 <script>
 
 export default {
-    name: 'PaginationBlogs',
-    props: ['blogs', 'currentPage', 'pageSize'],
+    name: 'PaginationBar',
+    props: ['entries', 'currentPage', 'pageSize'],
     methods: {
         updatePage(pageNumber){
             this.$emit('page:update', pageNumber)
         },
         totalPages(){
-            return Math.ceil(this.blogs.length / this.pageSize)
+            return Math.ceil(this.entries.length / this.pageSize)
         },
         showPreviousLink(){
             return this.currentPage == 0 ? false : true

@@ -2,10 +2,12 @@
   <html >
     <div class="about">
     <div class="aboutParagraphs">
+      <img src="@/assets/me2.png" alt="Avatar">
+
       <h2>About this blog</h2>
-      <p>Welcome to blog</p>
+      <p>Welcome to my blog, mainly projects about Rust, C# and Python are presented here.</p>
       <h2>About me</h2>
-      <p>This is about me</p>
+      <p>I am currently working at Relaxdays (e-commerce) as a backend developer with C#.</p>
       <h2>Contact</h2>
       <p>Feel free to reach out to me at <a class="eml-protected" href="mailto:danielwaechtler@protonmail.com">danielwaechtler@protonmail.com</a></p>
     </div>
@@ -13,7 +15,14 @@
 
   </html>
 </template>
-  
+
+<script>
+export default {
+  created () {
+    document.title = "About"
+  }
+}
+</script>
 
 <style scoped lang="scss">
 h2 { font-weight: normal; }
@@ -38,7 +47,15 @@ p {  color: rgb(79, 79, 82);}
   padding-top: 1%;
   width: 80% ;
 }
-
+img {
+  display: block;
+  margin-left: 50%;
+  margin-right: auto;
+  border-radius: 50%;
+  max-width:10%;
+  max-height:10%;
+  position:fixed;
+}
 
 
 </style>

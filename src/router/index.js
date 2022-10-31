@@ -3,7 +3,9 @@ import { createWebHistory, createRouter } from "vue-router";
 import BlogList from "@/views/BlogList.vue";
 import About from "@/views/AboutMe.vue";
 import BlogPage from "@/views/BlogPage.vue";
-
+import ProjectList from "@/views/ProjectList.vue";
+import ProjectPage from "@/views/ProjectPage.vue";
+import ErrorPage from "@/views/ErrorPage.vue"
 
 const routes = [
   {
@@ -18,10 +20,31 @@ const routes = [
   },
   {
     path: "/blog/:id",
-    name: "BlogExample",
+    name: "BlogSelected",
     component: BlogPage,
     props: route => ({ id: parseInt(route.params.id, 10) })
   },
+  {
+    path: "/projects",
+    name: "ProjectList",
+    component: ProjectList,
+  },
+  {
+    path: "/projects/:id",
+    name: "ProjectSelected",
+    component: ProjectPage,
+    props: route => ({ id: parseInt(route.params.id, 10) })
+  },
+  {
+    path: "/",
+    redirect: "/about"
+  },
+  {
+    path: '/:catchAll(.*)',
+    name: 'ErrorPage',
+    component: ErrorPage
+ }
+  
 ];
 
 const router = createRouter({

@@ -9,7 +9,7 @@
         <span class="bloglist__date">{{ item.last_modified }}</span>
       </article>
     </li>
-    <pagination-blogs class="pagination" v-bind:blogs="blogList" v-bind:currentPage="currentPage" v-bind:pageSize="pageSize" v-on:page:update="updatePage"></pagination-blogs>
+    <pagination-bar class="pagination" v-bind:entries="blogList" v-bind:currentPage="currentPage" v-bind:pageSize="pageSize" v-on:page:update="updatePage"></pagination-bar>
   </ul>
 </div>
 </template>
@@ -17,10 +17,10 @@
 <script>
     import blogList from "@/configs/blogList";
     import router from "@/router"
-    import PaginationBlogs from "@/components/PaginationBlogs.vue";
+    import PaginationBar from "@/components/PaginationBar.vue";
   export default {
     components: {
-      PaginationBlogs
+      PaginationBar
     },
     data(){
       return{
@@ -31,10 +31,13 @@
         visibleBlogs: []
       }
     },
+    created () {
+    document.title = "Blog"
+    },
     methods: {
         loadBlock(itemId){
             console.log(itemId)
-            this.router.push({name: 'BlogExample', params: {id: itemId}})
+            this.router.push({name: 'BlogSelected', params: {id: itemId}})
         },
         updatePage(pageNumber) {
           this.currentPage = pageNumber;
@@ -42,9 +45,6 @@
         },
         updateVisibleBlogs(){
           this.visibleBlogs = this.blogList.slice(this.currentPage * this.pageSize, (this.currentPage * this.pageSize) + this.pageSize)
-          if (this.visibleBlogs.length == 0 && this.currentPage > 0){
-            this.updateBlog(this.currentPage -1);
-          }
         }
     },
     beforeMount(){

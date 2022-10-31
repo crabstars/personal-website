@@ -1,7 +1,7 @@
 <template>
   <div>
-      <FirstBlog v-if="id === 1" />
-      <SecondBlog v-if="id === 2" />
+      <MockFromSameClass v-if="id === 2" />
+      <SecondBlog v-if="id === 1" />
       <!-- <div v-html="htmlText"></div>-->
   </div>
 </template>
@@ -9,15 +9,15 @@
 <script>
 import Prism from "prismjs";
 import 'prismjs/components/prism-rust';
+import 'prismjs/components/prism-csharp';
 import "./prism-tomorrow-own.css"; // custom css 
-import FirstBlog from "@/components/FirstBlog.vue"
-import SecondBlog from "@/components/SecondBlog.vue"
+import MockFromSameClass from "@/components/blogs/MockFromSameClassCsharp.vue"
+
 
 
 export default {
   components:{
-    FirstBlog,
-    SecondBlog,
+    MockFromSameClass,
 },
   props: {
     id: Number

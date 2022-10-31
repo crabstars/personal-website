@@ -1,20 +1,22 @@
 <template id="app">
   <html>
+    <link rel="icon" type="image/png" href="https://avatars.githubusercontent.com/u/51996192?s=400&u=619b0e7658044411906fa674068b22685133bcda&v=4">
       <div class="container">
       <ul>
         <li>
-          <a v-if="$route.path == '/about'" href='/about' class="hoverAnimation col-md-3" :class="{'active':(active===1), 'inactive':(active)}" @mouseover="setActive(1)" @mouseleave="setActive(0)" target="_self"><u>About</u></a>
-          <a v-else href='/about' class="hoverAnimation col-md-3" :class="{'active':(active===1), 'inactive':(active)}" @mouseover="setActive(1)" @mouseleave="setActive(0)" target="_self">About</a>
+          <a v-if="$route.path == '/about'" href='/about' target="_self"><u>About</u></a>
+          <a v-else href='/about' target="_self">About</a>
         </li>
-        <li>|</li>
         <li>
-          <a v-if="$route.path == '/blog'" href='/blog' class="hoverAnimation col-md-3" :class="{'active':(active===2), 'inactive':(active)}" @mouseover="setActive(2)" @mouseleave="setActive(0)" target="_self"><u>Blog</u></a>
-          <a v-else href='/blog' class="hoverAnimation col-md-3" :class="{'active':(active===2), 'inactive':(active)}" @mouseover="setActive(2)" @mouseleave="setActive(0)" target="_self">Blog</a>
+          <a v-if="$route.path == '/blog'" href='/blog' class="hoverAnimation col-md-3" target="_self"><u>Blog</u></a>
+          <a v-else href='/blog' class="hoverAnimation col-md-3" target="_self">Blog</a>
         </li>
-        <li>|</li>
-        <li><a href='https://github.com/LamaKami' class="hoverAnimation col-md-3" :class="{'active':(active===3), 'inactive':(active)}" @mouseover="setActive(3)" @mouseleave="setActive(0)" target="_blank">Github</a></li>
-        <li>|</li>
-        <li><a href='https://www.linkedin.com/in/daniel-w%C3%A4chtler-6b2422241/' class="hoverAnimation col-md-3" :class="{'active':(active===4), 'inactive':(active)}" @mouseover="setActive(4)" @mouseleave="setActive(0)" target="_blank">LinkedIn</a></li>
+        <li>
+          <a v-if="$route.path == '/projects'" href='/projects' class="hoverAnimation col-md-3"  target="_self"><u>Projects</u></a>
+          <a v-else href='/projects' class="hoverAnimation col-md-3"  target="_self">Projects</a>
+        </li>
+        <li><a href='https://github.com/crabstars' class="hoverAnimation col-md-3" target="_blank">Github</a></li>
+        <li><a href='https://www.linkedin.com/in/daniel-w%C3%A4chtler-6b2422241/' target="_blank">LinkedIn</a></li>
       </ul>
     </div>
 
@@ -46,10 +48,8 @@ export default {
       darkMode: false
     }
   },
+
   methods:{
-    setActive(value){ 
-      this.active = value;
-    },
     dark() {
             document.querySelector('body').classList.add('dark-mode')
             this.darkMode = true
@@ -126,7 +126,7 @@ export default {
   }
   
   body {
-    background: rgb(209, 228, 231) !important;
+    background: rgb(255, 255, 255) !important;
   }
 
 $mode-toggle-bg: #2f3146;
@@ -212,20 +212,70 @@ body.dark-mode {
   a, a:visited, a:hover, a:active {
   color: inherit;
 }
-ul {
-  font-family: Times New Roman, Helvetica, sans-serif;
-  list-style: none;
-  padding: 20px 40px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgb(0 0 0 / 50%);
-  background: radial-gradient(circle at 17% 98%, #869fa7, #2eb2da);
-  font-size: 20px;
-  color: #000000;
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Raleway', Arial, sans-serif;
 }
 
-ul li {
-  float: left;
-  
-  margin: 10px;
+ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  position: relative;
+  display: block;
+  margin: 0 10px;
+  padding: 5px 10px;
+  color: #333;
+  font-size: 30px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: 0.5s;
+  overflow: hidden;
+}
+
+a:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  left: -100%;
+  background-color: tomato;
+}
+
+a:hover:before {
+  animation: line 0.5s linear forwards;
+}
+
+@keyframes line {
+  0% {
+    left: -100%;
+    height: 4px;
+  }
+  50% {
+    left: 0;
+    height: 4px;
+  }
+   100% {
+    left: 0;
+    height: 100%;
+    z-index: -1;
+  }
+}
+
+a:hover {
+  color: white;
 }
 </style>
