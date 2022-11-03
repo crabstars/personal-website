@@ -28,11 +28,6 @@
           </div>
     </div>
 
-    <div id="app">
-  My name is <input v-model="name" >
-
-</div>
-
     <router-view />
   </html>
 </template>
@@ -49,7 +44,7 @@ export default {
       active: 0,
       router: router,
       darkMode: false,
-      name: ""
+      kekl: ""
     }
   },
 
@@ -61,6 +56,7 @@ export default {
         console.log("dark")
         document.querySelector('body')?.classList.add('dark-mode')
         document.querySelector('.about')?.classList.add('dark-mode')
+        this.darkMode = true
         },
 
     light() {
@@ -77,7 +73,6 @@ export default {
         } else {
             this.dark()
         }
-
         const checkbox = document.getElementById('checkbox')
         checkbox.addEventListener('change', () => {
           document.body.classList.toggle('dark')
@@ -90,24 +85,28 @@ export default {
         }
   },
   mounted() {
-    if (localStorage.darkMode) {
+    if (sessionStorage.darkMode) {
       console.log("mounted mode")
-      this.darkMode = localStorage.darkMode;
-    }
-    if (localStorage.name) {
-      console.log("mounted name")
-      this.name = localStorage.name;
+      this.darkMode = sessionStorage.darkMode;
+      console.log("kek " + this.darkMode)
+      
+      if(this.darkMode === 'true'){
+        console.log("set dark")
+          this.dark()
+      } else{
+        console.log("set light")
+        this.light()
+      }
     }
   },
   watch: {
-    name(newName) {
-      console.log(newName)
-      localStorage.name = newName;
-    },
     darkMode(mode) {
       console.log(mode)
-      localStorage.darkMode = mode;
+      sessionStorage.darkMode = mode;
     }
+  },
+  unmounted(){
+    sessionStorage.clear()
   }
 }
 </script>
